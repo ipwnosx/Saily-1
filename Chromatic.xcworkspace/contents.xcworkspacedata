@@ -5,10 +5,16 @@
       location = "group:Application/Chromatic.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:PrivilegeSpawn/rootspawn.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Foundation/AptPackageVersion">
    </FileRef>
    <FileRef
       location = "group:Foundation/AptRepository">
+   </FileRef>
+   <FileRef
+      location = "group:Foundation/AuxiliaryExecute">
    </FileRef>
    <FileRef
       location = "group:Foundation/BitByteData">
@@ -32,6 +38,9 @@
       location = "group:Foundation/Digger">
    </FileRef>
    <FileRef
+      location = "group:Foundation/DTPhotoViewerController">
+   </FileRef>
+   <FileRef
       location = "group:Foundation/FLAnimatedImage">
    </FileRef>
    <FileRef
@@ -44,10 +53,10 @@
       location = "group:Foundation/LNPopupController">
    </FileRef>
    <FileRef
-      location = "group:Foundation/LookinServer">
+      location = "group:Foundation/LTMorphingLabel">
    </FileRef>
    <FileRef
-      location = "group:Foundation/LTMorphingLabel">
+      location = "group:Foundation/PathListTableViewController">
    </FileRef>
    <FileRef
       location = "group:Foundation/PropertyWrapper">
@@ -75,5 +84,8 @@
    </FileRef>
    <FileRef
       location = "group:Foundation/SwiftThrottle">
+   </FileRef>
+   <FileRef
+      location = "group:Foundation/Tuner">
    </FileRef>
 </Workspace>

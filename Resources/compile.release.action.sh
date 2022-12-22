@@ -75,10 +75,17 @@ find "$BUILD_PRODUCT" -name "*.deb" -exec cp {} ./artifact \;
 # copy every file with ipa extension inside build product into current dir
 find "$BUILD_PRODUCT" -name "*.ipa" -exec cp {} ./artifact \;
 
+# get dir with *.dSYM inside 
+DSYM_LOCATION=$(find "./Release-$TIMESTAMP/DerivedDataApp/Build/Products/Release-iphoneos/" -maxdepth 1 -type d -name "*.dSYM" | head -n 1)
+zip -r0 "./artifact/$TIMESTAMP+dSYM.zip" "$DSYM_LOCATION"
+
 # print artifact dir
 echo "Artifacts [$(pwd)] :"
 ls -la ./artifact
 
-echo "build_timestamp=$TIMESTAMP" >> "$GITHUB_ENV"
+# check if CI is set to true
+if [ "$CI" = "true" ]; then
+    echo "build_timestamp=$TIMESTAMP" >> "$GITHUB_ENV"
+fi
 
 # done

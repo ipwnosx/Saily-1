@@ -45,6 +45,7 @@ extension SettingView {
                                               style: .destructive,
                                               handler: { _ in
                                                   InterfaceBridge.enableShareSheet = true
+                                                  self.dispatchValueUpdate()
                                               }))
                 alert.addAction(UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"),
                                               style: .cancel, handler: { _ in
@@ -53,6 +54,7 @@ extension SettingView {
                 self.parentViewController?.present(alert, animated: true, completion: nil)
             } else {
                 InterfaceBridge.enableShareSheet = false
+                self.dispatchValueUpdate()
             }
         }
         #if DEBUG
@@ -67,16 +69,17 @@ extension SettingView {
                                        dataType: .submenuWithAction,
                                        initData: nil) { _, anchor in
             self.dropDownConfirm(anchor: anchor,
-                                 text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons")) { [weak self] in
+                                 text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons"))
+            { [weak self] in
                 let alert = UIAlertController(title: "⚠️",
                                               message: NSLocalizedString("RELOAD_ICON_CACHE_TASKES_TIME", comment: "Reloading home screen icons will take some time"),
                                               preferredStyle: .alert)
                 self?.parentViewController?.present(alert, animated: true) {
                     DispatchQueue.global().async {
-                        AuxiliaryExecute.rootspawn(command: AuxiliaryExecute.uicache,
-                                                   args: ["--all"],
-                                                   timeout: 120,
-                                                   output: { _ in })
+                        AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.uicache,
+                                                          args: ["--all"],
+                                                          timeout: 120,
+                                                          output: { _ in })
                         DispatchQueue.main.async {
                             alert.dismiss(animated: true, completion: nil)
                         }
@@ -89,10 +92,11 @@ extension SettingView {
                                         dataType: .submenuWithAction,
                                         initData: nil) { _, anchor in
             self.dropDownConfirm(anchor: anchor,
-                                 text: NSLocalizedString("RELOAD_DESKTOP", comment: "Reload Desktop")) {
-                AuxiliaryExecute.suspendApplication()
+                                 text: NSLocalizedString("RELOAD_DESKTOP", comment: "Reload Desktop"))
+            {
+                AuxiliaryExecuteWrapper.suspendApplication()
                 sleep(1)
-                AuxiliaryExecute.reloadSpringboard()
+                AuxiliaryExecuteWrapper.reloadSpringboard()
             }
         }
         let safemode = SettingElement(iconSystemNamed: "shield",
@@ -100,12 +104,13 @@ extension SettingView {
                                       dataType: .submenuWithAction,
                                       initData: nil) { _, anchor in
             self.dropDownConfirm(anchor: anchor,
-                                 text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode")) {
-                AuxiliaryExecute.suspendApplication()
+                                 text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode"))
+            {
+                AuxiliaryExecuteWrapper.suspendApplication()
                 sleep(1)
-                AuxiliaryExecute.rootspawn(command: AuxiliaryExecute.killall,
-                                           args: ["-SEGV", "SpringBoard"],
-                                           timeout: 1) { _ in
+                AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.killall,
+                                                  args: ["-SEGV", "SpringBoard"],
+                                                  timeout: 1) { _ in
                 }
             }
         }

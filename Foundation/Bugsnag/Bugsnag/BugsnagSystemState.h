@@ -8,26 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "BugsnagConfiguration.h"
-#import "BugsnagKeys.h"
+#import <Bugsnag/BugsnagConfiguration.h>
+
+#import "BSGDefines.h"
+#import "BSGKeys.h"
 
 #define SYSTEMSTATE_KEY_APP @"app"
 #define SYSTEMSTATE_KEY_DEVICE @"device"
-
-#define SYSTEMSTATE_APP_WAS_TERMINATED @"wasTerminated"
-#define SYSTEMSTATE_APP_IS_ACTIVE @"isActive"
-#define SYSTEMSTATE_APP_IS_IN_FOREGROUND @"inForeground"
-#define SYSTEMSTATE_APP_IS_LAUNCHING BSGKeyIsLaunching
-#define SYSTEMSTATE_APP_VERSION @"version"
-#define SYSTEMSTATE_APP_BUNDLE_VERSION @"bundleVersion"
-#define SYSTEMSTATE_APP_DEBUGGER_IS_ACTIVE @"debuggerIsActive"
-
-#define SYSTEMSTATE_DEVICE_BOOT_TIME @"bootTime"
 
 #define PLATFORM_WORD_SIZE sizeof(void*)*8
 
 NS_ASSUME_NONNULL_BEGIN
 
+BSG_OBJC_DIRECT_MEMBERS
 @interface BugsnagSystemState : NSObject
 
 @property(readonly,nonatomic) NSDictionary *lastLaunchState;
@@ -39,8 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCodeBundleID:(NSString*)codeBundleID;
 
 @property (nonatomic) NSUInteger consecutiveLaunchCrashes;
-
-- (void)markLaunchCompleted;
 
 /**
  * Purge all stored system state.

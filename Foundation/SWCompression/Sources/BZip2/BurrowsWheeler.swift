@@ -1,11 +1,11 @@
-// Copyright (c) 2021 Timofey Solomko
+// Copyright (c) 2022 Timofey Solomko
 // Licensed under MIT License
 //
 // See LICENSE for license information
 
 import Foundation
 
-class BurrowsWheeler {
+enum BurrowsWheeler {
     static func transform(bytes: [Int]) -> ([Int], Int) {
         let doubleBytes = bytes + bytes
         let suffixArray = SuffixArray.make(from: doubleBytes, with: 256)

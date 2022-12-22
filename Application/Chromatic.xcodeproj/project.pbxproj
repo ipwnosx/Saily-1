@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -51,13 +51,13 @@
 		5034021426BFF24000E8D02B /* RepoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034021126BFF24000E8D02B /* RepoCard.swift */; };
 		5034021526BFF24000E8D02B /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034021226BFF24000E8D02B /* RepoTableViewCell.swift */; };
 		5034021626BFF24000E8D02B /* RepoCard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5034021326BFF24000E8D02B /* RepoCard.xcassets */; };
-		5034021926BFFF6B00E8D02B /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 5034021826BFFF6B00E8D02B /* LookinServer */; };
 		5034021F26C003E600E8D02B /* RepoAddViewController.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5034021B26C003E600E8D02B /* RepoAddViewController.xcassets */; };
 		5034022026C003E600E8D02B /* RepoAddSectionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034021C26C003E600E8D02B /* RepoAddSectionInput.swift */; };
 		5034022126C003E600E8D02B /* RepoAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034021D26C003E600E8D02B /* RepoAddController.swift */; };
 		5034022426C00B2E00E8D02B /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034022326C00B2E00E8D02B /* UIWindow.swift */; };
 		5034022626C00C2700E8D02B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5034022526C00C2700E8D02B /* Colors.xcassets */; };
 		5034022926C023FF00E8D02B /* RamLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034022826C023FF00E8D02B /* RamLogController.swift */; };
+		5037FB6628470117009BB103 /* Tuner in Frameworks */ = {isa = PBXBuildFile; productRef = 5037FB6528470117009BB103 /* Tuner */; };
 		50435E9626DBD35100D3ED25 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 50435E9526DBD35100D3ED25 /* Bugsnag */; };
 		50443FB026F1B4FB00F4EDED /* IBDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50443FAF26F1B4FB00F4EDED /* IBDashboard.swift */; };
 		50443FB626F1D2C600F4EDED /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50443FB226F1D2C600F4EDED /* DashboardController.swift */; };
@@ -76,7 +76,6 @@
 		50759B4226F0379800EF39B5 /* PackageUpdateTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759B4126F0379800EF39B5 /* PackageUpdateTableCell.swift */; };
 		50759B4626F04A0400EF39B5 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759B4526F04A0400EF39B5 /* UpdateController.swift */; };
 		50759B4826F04A1000EF39B5 /* BlockUpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759B4726F04A1000EF39B5 /* BlockUpdateController.swift */; };
-		507873E226F4091F0004A380 /* .bartycrouch.toml in Resources */ = {isa = PBXBuildFile; fileRef = 507873E126F4091F0004A380 /* .bartycrouch.toml */; };
 		507D1E7326BFA87D00E72E9B /* SwiftThrottle in Frameworks */ = {isa = PBXBuildFile; productRef = 507D1E7226BFA87D00E72E9B /* SwiftThrottle */; };
 		507D1E7526BFA88100E72E9B /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 507D1E7426BFA88100E72E9B /* SwifterSwift */; };
 		507D1E7726BFA88500E72E9B /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 507D1E7626BFA88500E72E9B /* SWCompression */; };
@@ -112,10 +111,12 @@
 		5091064126C030BA004F978E /* PPShine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5091064026C030BA004F978E /* PPShine.swift */; };
 		5093C24626D158F5004B61B5 /* AptScanner+Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093C24526D158F5004B61B5 /* AptScanner+Install.swift */; };
 		5093C24826D163F7004B61B5 /* TaskManager+Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093C24726D163F7004B61B5 /* TaskManager+Api.swift */; };
+		50940CA227C618D400075B48 /* PathListTableViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 50940CA127C618D400075B48 /* PathListTableViewController */; };
 		50972E2426D5F727008BDCFE /* TaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50972E2326D5F727008BDCFE /* TaskProcessor.swift */; };
 		50975F0126C65720004BCBED /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50975F0026C65720004BCBED /* SearchController.swift */; };
 		50975F0326C65910004BCBED /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50975F0226C65910004BCBED /* SearchCell.swift */; };
 		50975F0526C65994004BCBED /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50975F0426C65994004BCBED /* SearchResult.swift */; };
+		50A255CD2768F3800078C432 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A255CC2768F3800078C432 /* Console.swift */; };
 		50A283EF26D54492005FA2DB /* SwiftMD5 in Frameworks */ = {isa = PBXBuildFile; productRef = 50A283EE26D54492005FA2DB /* SwiftMD5 */; };
 		50A283F126D5E34E005FA2DB /* OperationConsoleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A283F026D5E34E005FA2DB /* OperationConsoleController.swift */; };
 		50A8052626CB5FA300F8FB7D /* HDRepoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A8052526CB5FA300F8FB7D /* HDRepoController.swift */; };
@@ -135,12 +136,14 @@
 		50C668A926CFB560005A68BE /* PackageVersionControlController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C668A826CFB560005A68BE /* PackageVersionControlController.swift */; };
 		50C668AB26CFE76E005A68BE /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C668AA26CFE76E005A68BE /* RepoCell.swift */; };
 		50C88B0A26D22ADD00758FEF /* AptScanner+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C88B0926D22ADD00758FEF /* AptScanner+Report.swift */; };
+		50CF5829276049A8003AA45B /* AuxiliaryExecute in Frameworks */ = {isa = PBXBuildFile; productRef = 50CF5828276049A8003AA45B /* AuxiliaryExecute */; };
 		50CFB01926D2671600E66AB9 /* Digger in Frameworks */ = {isa = PBXBuildFile; productRef = 50CFB01826D2671600E66AB9 /* Digger */; };
 		50CFB01B26D26CC900E66AB9 /* PackageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CFB01A26D26CC900E66AB9 /* PackageAction.swift */; };
 		50D528BC2449B11300F4A483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D528BB2449B11300F4A483 /* AppDelegate.swift */; };
 		50D528BE2449B11300F4A483 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D528BD2449B11300F4A483 /* SceneDelegate.swift */; };
 		50D528C52449B11400F4A483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50D528C42449B11400F4A483 /* Assets.xcassets */; };
 		50DBCBBE26D393EB007D2E73 /* AppleAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBCBBD26D393EB007D2E73 /* AppleAvatar.swift */; };
+		50E0BE9F276909BF00B6A852 /* Console+Recovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0BE9E276909BF00B6A852 /* Console+Recovery.swift */; };
 		50E1823926C76F6600C6894F /* SearchPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E1823826C76F6600C6894F /* SearchPlaceholder.swift */; };
 		50E316E926CD233D00D4D633 /* PackageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E316E826CD233D00D4D633 /* PackageCollectionCell.swift */; };
 		50E316EB26CD234300D4D633 /* PackageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E316EA26CD234300D4D633 /* PackageCell.swift */; };
@@ -153,6 +156,8 @@
 		50FA2C6526BC3765003806D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50FA2C6126BC3765003806D6 /* LaunchScreen.storyboard */; };
 		50FA2C6826BC383E003806D6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA2C6726BC383E003806D6 /* Constant.swift */; };
 		50FA2C6A26BC398E003806D6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA2C6926BC398E003806D6 /* main.swift */; };
+		50FE7A22271B2AA800CB74EB /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FE7A20271B2AA800CB74EB /* LaunchScreenBackground.png */; };
+		50FE7A23271B2AA800CB74EB /* AppIconTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FE7A21271B2AA800CB74EB /* AppIconTransparent.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -265,7 +270,9 @@
 		50975F0226C65910004BCBED /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		50975F0426C65994004BCBED /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		509C526C26F9C43300116616 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		50A255CC2768F3800078C432 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		50A283F026D5E34E005FA2DB /* OperationConsoleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationConsoleController.swift; sourceTree = "<group>"; };
+		50A2D69A27A51101006B61DE /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50A8052526CB5FA300F8FB7D /* HDRepoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDRepoController.swift; sourceTree = "<group>"; };
 		50A8052A26CB78DF00F8FB7D /* RepoAddController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepoAddController+Layout.swift"; sourceTree = "<group>"; };
 		50A8052C26CB7D9300F8FB7D /* HDSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDSearchController.swift; sourceTree = "<group>"; };
@@ -283,12 +290,16 @@
 		50C668A826CFB560005A68BE /* PackageVersionControlController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageVersionControlController.swift; sourceTree = "<group>"; };
 		50C668AA26CFE76E005A68BE /* RepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
 		50C88B0926D22ADD00758FEF /* AptScanner+Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AptScanner+Report.swift"; sourceTree = "<group>"; };
+		50CC2FA027A105E700BA2042 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		50CC2FA127A1060400BA2042 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		50CC2FA227A1061700BA2042 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50CFB01A26D26CC900E66AB9 /* PackageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageAction.swift; sourceTree = "<group>"; };
 		50D528B82449B11300F4A483 /* chromatic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chromatic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D528BB2449B11300F4A483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50D528BD2449B11300F4A483 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		50D528C42449B11400F4A483 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50DBCBBD26D393EB007D2E73 /* AppleAvatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleAvatar.swift; sourceTree = "<group>"; };
+		50E0BE9E276909BF00B6A852 /* Console+Recovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Console+Recovery.swift"; sourceTree = "<group>"; };
 		50E1823826C76F6600C6894F /* SearchPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceholder.swift; sourceTree = "<group>"; };
 		50E316E826CD233D00D4D633 /* PackageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCollectionCell.swift; sourceTree = "<group>"; };
 		50E316EA26CD234300D4D633 /* PackageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCell.swift; sourceTree = "<group>"; };
@@ -302,6 +313,8 @@
 		50FA2C6126BC3765003806D6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50FA2C6726BC383E003806D6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		50FA2C6926BC398E003806D6 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		50FE7A20271B2AA800CB74EB /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
+		50FE7A21271B2AA800CB74EB /* AppIconTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconTransparent.png; sourceTree = "<group>"; };
 		B5DD518226F358FD007EFF58 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -313,18 +326,20 @@
 				507D1E8F26BFA8BC00E72E9B /* BitByteData in Frameworks */,
 				50527FFC26CFF6A600FD846D /* FluentIcon in Frameworks */,
 				50A8053326CB833D00F8FB7D /* LNPopupController-Static in Frameworks */,
+				50940CA227C618D400075B48 /* PathListTableViewController in Frameworks */,
 				507D1E9126BFA8BF00E72E9B /* AptRepository in Frameworks */,
 				507D1E7726BFA88500E72E9B /* SWCompression in Frameworks */,
 				50A283EF26D54492005FA2DB /* SwiftMD5 in Frameworks */,
 				507D1E8D26BFA8B700E72E9B /* Cosmos in Frameworks */,
+				5037FB6628470117009BB103 /* Tuner in Frameworks */,
 				507D1E7926BFA88D00E72E9B /* SnapKit in Frameworks */,
 				508AF3F426CB8F66000A2EC6 /* JsonDepiction in Frameworks */,
 				500D83AA26C2158600D9E701 /* SPIndicator in Frameworks */,
 				507D1E7F26BFA89800E72E9B /* MorphingLabel in Frameworks */,
 				505BB6CD26D78235007F5B15 /* Renet in Frameworks */,
-				5034021926BFFF6B00E8D02B /* LookinServer in Frameworks */,
 				500D83A626C2157E00D9E701 /* FLAnimatedImage in Frameworks */,
 				507D1E7326BFA87D00E72E9B /* SwiftThrottle in Frameworks */,
+				50CF5829276049A8003AA45B /* AuxiliaryExecute in Frameworks */,
 				507D1E8B26BFA8B400E72E9B /* Dog in Frameworks */,
 				507D1E7526BFA88100E72E9B /* SwifterSwift in Frameworks */,
 				507D1E7B26BFA89000E72E9B /* SDWebImage in Frameworks */,
@@ -369,7 +384,6 @@
 		5012BCE826BFA4A50064A564 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				50FA2C6126BC3765003806D6 /* LaunchScreen.storyboard */,
 				50FA2C5F26BC3765003806D6 /* Main.storyboard */,
 				5012BCE926BFA4B20064A564 /* Initialization */,
 				507D1E9626BFACE400E72E9B /* Navigators */,
@@ -566,6 +580,7 @@
 		50871620244B3530003E0023 /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				50E0BE9D276909AB00B6A852 /* Console */,
 				6865D586246856C20073EF2A /* Common */,
 				508E475626D5363200D0806F /* CariolNetwork */,
 				50F256A026CE500A0008646E /* TaskManager */,
@@ -740,8 +755,18 @@
 				50D528C42449B11400F4A483 /* Assets.xcassets */,
 				5000347F2469765800890951 /* Sections.xcassets */,
 				5034022526C00C2700E8D02B /* Colors.xcassets */,
+				50FE7A1F271B2A9900CB74EB /* LauncScreen */,
 			);
 			path = Chromatic;
+			sourceTree = "<group>";
+		};
+		50E0BE9D276909AB00B6A852 /* Console */ = {
+			isa = PBXGroup;
+			children = (
+				50A255CC2768F3800078C432 /* Console.swift */,
+				50E0BE9E276909BF00B6A852 /* Console+Recovery.swift */,
+			);
+			path = Console;
 			sourceTree = "<group>";
 		};
 		50F256A026CE500A0008646E /* TaskManager */ = {
@@ -756,6 +781,16 @@
 				500A2E5926D12C0100A1DA03 /* AptScanner+Remove.swift */,
 			);
 			path = TaskManager;
+			sourceTree = "<group>";
+		};
+		50FE7A1F271B2A9900CB74EB /* LauncScreen */ = {
+			isa = PBXGroup;
+			children = (
+				50FE7A21271B2AA800CB74EB /* AppIconTransparent.png */,
+				50FE7A20271B2AA800CB74EB /* LaunchScreenBackground.png */,
+				50FA2C6126BC3765003806D6 /* LaunchScreen.storyboard */,
+			);
+			name = LauncScreen;
 			sourceTree = "<group>";
 		};
 		6865D586246856C20073EF2A /* Common */ = {
@@ -802,7 +837,6 @@
 				507D1E8C26BFA8B700E72E9B /* Cosmos */,
 				507D1E8E26BFA8BC00E72E9B /* BitByteData */,
 				507D1E9026BFA8BF00E72E9B /* AptRepository */,
-				5034021826BFFF6B00E8D02B /* LookinServer */,
 				500D83A526C2157E00D9E701 /* FLAnimatedImage */,
 				500D83A926C2158600D9E701 /* SPIndicator */,
 				50A8053226CB833D00F8FB7D /* LNPopupController-Static */,
@@ -812,6 +846,9 @@
 				50A283EE26D54492005FA2DB /* SwiftMD5 */,
 				505BB6CC26D78235007F5B15 /* Renet */,
 				50435E9526DBD35100D3ED25 /* Bugsnag */,
+				50CF5828276049A8003AA45B /* AuxiliaryExecute */,
+				50940CA127C618D400075B48 /* PathListTableViewController */,
+				5037FB6528470117009BB103 /* Tuner */,
 			);
 			productName = Protein;
 			productReference = 50D528B82449B11300F4A483 /* chromatic.app */;
@@ -845,6 +882,10 @@
 				"pt-BR",
 				de,
 				Base,
+				fr,
+				it,
+				ru,
+				tr,
 			);
 			mainGroup = 50D528AF2449B11300F4A483;
 			productRefGroup = 50D528B92449B11300F4A483 /* Products */;
@@ -866,6 +907,8 @@
 				5034022626C00C2700E8D02B /* Colors.xcassets in Resources */,
 				50FA2C6526BC3765003806D6 /* LaunchScreen.storyboard in Resources */,
 				50FA2C6326BC3765003806D6 /* Main.storyboard in Resources */,
+				50FE7A23271B2AA800CB74EB /* AppIconTransparent.png in Resources */,
+				50FE7A22271B2AA800CB74EB /* LaunchScreenBackground.png in Resources */,
 				503401F726BFD5B900E8D02B /* WelcomeCard.xcassets in Resources */,
 				5034021F26C003E600E8D02B /* RepoAddViewController.xcassets in Resources */,
 				5034021626BFF24000E8D02B /* RepoCard.xcassets in Resources */,
@@ -874,7 +917,6 @@
 				508AF3F626CB9497000A2EC6 /* PackageController.xcassets in Resources */,
 				5011783826D27AB600AB123C /* Bundle in Resources */,
 				5034020B26BFE57B00E8D02B /* DashNavCard.xcassets in Resources */,
-				507873E226F4091F0004A380 /* .bartycrouch.toml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +925,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		501433FB26D0CDB80042A048 /* Swift Format */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -901,6 +944,7 @@
 		};
 		501433FC26D0CE6C0042A048 /* Bartycrouch Update */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -948,6 +992,7 @@
 				5034020C26BFE57B00E8D02B /* DashNavCard.swift in Sources */,
 				5093C24826D163F7004B61B5 /* TaskManager+Api.swift in Sources */,
 				50975F0526C65994004BCBED /* SearchResult.swift in Sources */,
+				50E0BE9F276909BF00B6A852 /* Console+Recovery.swift in Sources */,
 				50C88B0A26D22ADD00758FEF /* AptScanner+Report.swift in Sources */,
 				503401F926BFD77900E8D02B /* UIColor.swift in Sources */,
 				506E837D26BFC4E700C6C16E /* LXSplitController.swift in Sources */,
@@ -955,6 +1000,7 @@
 				50EFF10326C191EC0095BD8D /* LXTaskController.swift in Sources */,
 				50274CBD26D68ACD000EF6BB /* RepoDetailController+Payment.swift in Sources */,
 				50BFD9A026DBE86400931488 /* LicenseController.swift in Sources */,
+				50A255CD2768F3800078C432 /* Console.swift in Sources */,
 				507D1E9B26BFB57500E72E9B /* Notification.swift in Sources */,
 				508AF40C26CBFBC4000A2EC6 /* RepoDetailController.swift in Sources */,
 				50FA2C6A26BC398E003806D6 /* main.swift in Sources */,
@@ -1049,6 +1095,10 @@
 				5087445526F6397800DA9EC8 /* ja */,
 				5087445626F6398200DA9EC8 /* pt-BR */,
 				509C526C26F9C43300116616 /* de */,
+				50CC2FA027A105E700BA2042 /* fr */,
+				50CC2FA127A1060400BA2042 /* it */,
+				50CC2FA227A1061700BA2042 /* ru */,
+				50A2D69A27A51101006B61DE /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1177,15 +1227,17 @@
 		50D5290D2449B11600F4A483 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Chromatic/Chromatic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 100;
-				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				DEVELOPMENT_TEAM = VXCY5K2T3N;
 				DOCKER_SHOULD_BUILD = NO;
-				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
+				ENABLE_BITCODE = NO;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "$(SRCROOT)/Chromatic/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1211,15 +1263,16 @@
 		50D5290E2449B11600F4A483 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Chromatic/Chromatic.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 100;
-				DEVELOPMENT_TEAM = GXZ23M5TP2;
+				DEVELOPMENT_TEAM = "";
 				DOCKER_SHOULD_BUILD = NO;
-				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
+				ENABLE_BITCODE = NO;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Chromatic/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
@@ -1231,8 +1284,7 @@
 				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.chromatic;
 				PRODUCT_NAME = chromatic;
-				PROVISIONING_PROFILE_SPECIFIER = "QAQ Wiki iOS";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = ./Chromatic/Backend/Common/Bridge.h;
 				SWIFT_VERSION = 5.0;
@@ -1272,9 +1324,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SPIndicator;
 		};
-		5034021826BFFF6B00E8D02B /* LookinServer */ = {
+		5037FB6528470117009BB103 /* Tuner */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = LookinServer;
+			productName = Tuner;
 		};
 		50435E9526DBD35100D3ED25 /* Bugsnag */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1344,6 +1396,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = JsonDepiction;
 		};
+		50940CA127C618D400075B48 /* PathListTableViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PathListTableViewController;
+		};
 		50A283EE26D54492005FA2DB /* SwiftMD5 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftMD5;
@@ -1351,6 +1407,10 @@
 		50A8053226CB833D00F8FB7D /* LNPopupController-Static */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "LNPopupController-Static";
+		};
+		50CF5828276049A8003AA45B /* AuxiliaryExecute */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuxiliaryExecute;
 		};
 		50CFB01826D2671600E66AB9 /* Digger */ = {
 			isa = XCSwiftPackageProductDependency;

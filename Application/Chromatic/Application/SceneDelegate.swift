@@ -16,12 +16,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let reloadThrottle = Throttle(minimumDelay: 0.5, queue: .global())
 
-    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
+
+        // created from user activity
+        if let userActivity = options.userActivities.first ?? session.stateRestorationActivity {
+            if !configure(window: window, with: userActivity) {
+                debugPrint("failed to restore from \(userActivity)")
+            }
+            return
+        }
+
+        // if not, check for url schemes
         let urlContexts = options.urlContexts
         DispatchQueue.main.async {
             self.scene(scene, openURLContexts: urlContexts)
         }
+    }
+
+    func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
+        var configured = false
+        if activity.title == cUserActivityDropPackage {
+            if let data = activity.userInfo?["attach"] as? Data,
+               let package = Package.propertyListDecoded(with: data)
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    let packageConteroller = PackageController(package: package)
+                    window?
+                        .topMostViewController?
+                        .present(next: packageConteroller)
+                }
+                configured = true
+            }
+        }
+        return configured
     }
 
     func sceneDidDisconnect(_: UIScene) {}
@@ -50,25 +78,66 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         for item in URLContexts {
-            let firstItem = item.url
-            if firstItem.absoluteString.lowercased().hasPrefix("file://"),
-               firstItem.absoluteString.lowercased().hasSuffix(".deb")
+            let itemUrl = item.url
+            if itemUrl.absoluteString.hasPrefix("file://"),
+               itemUrl.absoluteString.hasSuffix(".deb")
             {
-                while !SetupViewController.setupCompleted { sleep(1) }
-                DispatchQueue.main.async {
-                    if let presenter =
-                        (
-                            (scene as? UIWindowScene)?
-                                .delegate as? UIWindowSceneDelegate
-                        )?
-                        .window??
-                        .topMostViewController
-                    {
-                        let target = DirectInstallController()
-                        target.patternLocation = firstItem
-                        presenter.present(next: target)
-                    }
+                openQuickInstall(scene: scene, url: itemUrl)
+                continue
+            }
+
+            if itemUrl.absoluteString.hasPrefix("apt-repo://") {
+                var str = itemUrl.absoluteString
+                str.removeFirst("apt-repo://".count)
+                // workaround for url scheme removing : from context
+                // eg: apt-repo://https://example.com -> apt-repo://https//example.com
+                // just put it back, it's usually happening when Safari make magic
+                str = str.replacingOccurrences(of: "http//", with: "http://")
+                str = str.replacingOccurrences(of: "https//", with: "https://")
+                guard let url = URL(string: str) else {
+                    continue
                 }
+                Dog.shared.join(self, "scheme calling apt-repo add for value \(url.absoluteString)")
+                openQuickAddRepo(scene: scene, url: url)
+                continue
+            }
+        }
+    }
+
+    func openQuickAddRepo(scene: UIScene, url: URL) {
+        while !SetupViewController.setupCompleted { sleep(1) }
+        DispatchQueue.main.async {
+            if let presenter =
+                (
+                    (scene as? UIWindowScene)?
+                        .delegate as? UIWindowSceneDelegate
+                )?
+                .window??
+                .topMostViewController
+            {
+                let target = RepoAddViewController()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    target.userInputValues.text = url.absoluteString
+                }
+                presenter.present(next: target)
+            }
+        }
+    }
+
+    func openQuickInstall(scene: UIScene, url: URL) {
+        while !SetupViewController.setupCompleted { sleep(1) }
+        DispatchQueue.main.async {
+            if let presenter =
+                (
+                    (scene as? UIWindowScene)?
+                        .delegate as? UIWindowSceneDelegate
+                )?
+                .window??
+                .topMostViewController
+            {
+                let target = DirectInstallController()
+                target.patternLocation = url
+                presenter.present(next: target)
             }
         }
     }

@@ -25,7 +25,7 @@ typedef struct bsg_mach_image {
 
     /// The mach_header or mach_header_64
     ///
-    /// This is also the memory address where the image has been loaded by dyld, including slide.
+    /// This is also the memory address where the __TEXT segment has been loaded by dyld, including slide.
     const struct mach_header *header;
 
     /// The vmaddr specified for the __TEXT segment
@@ -47,9 +47,9 @@ typedef struct bsg_mach_image {
 
     /// True if the image has been unloaded and should be ignored
     bool unloaded;
-
-    /// True if this image is a program with an entry point; i.e. LC_MAIN or LC_UNIXTHREAD
-    bool isMain;
+    
+    /// True if the image is referenced by the current crash report.
+    bool inCrashReport;
 
     /// The next image in the linked list
     struct bsg_mach_image *next;
@@ -63,11 +63,6 @@ typedef struct bsg_mach_image {
 void bsg_mach_headers_initialize(void);
 
 /**
-  * Registers with dyld to keep data updated when libraries are loaded and unloaded
- */
-void bsg_mach_headers_register_for_changes(void);
-
-/**
  * Returns the head of the link list of headers
  */
 BSG_Mach_Header_Info *bsg_mach_headers_get_images(void);
@@ -76,6 +71,11 @@ BSG_Mach_Header_Info *bsg_mach_headers_get_images(void);
  * Returns the process's main image
  */
 BSG_Mach_Header_Info *bsg_mach_headers_get_main_image(void);
+
+/**
+ * Returns the image that contains KSCrash.
+ */
+BSG_Mach_Header_Info *bsg_mach_headers_get_self_image(void);
 
 /**
  * Called when a binary image is loaded.
@@ -112,15 +112,6 @@ BSG_Mach_Header_Info *bsg_mach_headers_image_named(const char *const imageName, 
  *         should not happen unless the header or image is corrupt).
  */
 uintptr_t bsg_mach_headers_first_cmd_after_header(const struct mach_header *header);
-
-/** Get the segment base address of the specified image.
- *
- * This is required for any symtab command offsets.
- *
- * @param header The header to get commands for.
- * @return The image's base address, or 0 if none was found.
- */
-uintptr_t bsg_mach_headers_image_at_base_of_image_index(const struct mach_header *header);
 
 /** Get the __crash_info message of the specified image.
  *

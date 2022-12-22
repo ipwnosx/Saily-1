@@ -8,6 +8,7 @@
 
 import AptRepository
 import Digger
+import FluentIcon
 import SDWebImage
 import UIKit
 
@@ -43,6 +44,9 @@ class PackageCell: UIView, PackageCellFunction {
     init() {
         super.init(frame: CGRect())
 
+        let dragInteraction = UIDragInteraction(delegate: self)
+        addInteraction(dragInteraction)
+
         addSubview(contentView)
         contentView.snp.makeConstraints { x in
             x.edges.equalToSuperview()
@@ -69,7 +73,7 @@ class PackageCell: UIView, PackageCellFunction {
         }
 
         indicator.backgroundColor = .clear
-        indicator.cornerRadius = 8
+        indicator.layer.cornerRadius = 8
         indicator.clipsToBounds = true
         indicator.snp.makeConstraints { x in
             x.centerX.equalTo(avatar.snp.right).offset(-4)
@@ -353,5 +357,38 @@ class PackageCell: UIView, PackageCellFunction {
         UIView.animate(withDuration: 0.2) { [self] in
             progressView.setProgress(Float(info.progress.fractionCompleted), animated: true)
         }
+    }
+}
+
+extension PackageCell: UIDragInteractionDelegate {
+    func dragInteraction(_: UIDragInteraction, itemsForBeginning _: UIDragSession) -> [UIDragItem] {
+        guard let package = represent else { return [] }
+
+        // define
+        let provider = NSItemProvider(object: captureDragImage())
+        let dragItem = UIDragItem(itemProvider: provider)
+
+        // attach user activity if available
+        if let data = package.propertyListEncoded() {
+            let userActivity = NSUserActivity(activityType: cUserActivityDropPackage)
+            userActivity.title = cUserActivityDropPackage
+            userActivity.userInfo = ["attach": data]
+            provider.registerObject(userActivity, visibility: .all)
+        }
+
+        // return drag
+        return [dragItem]
+    }
+
+    private func captureDragImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        if let context = UIGraphicsGetCurrentContext() {
+            layer.render(in: context)
+            if let image = UIGraphicsGetImageFromCurrentImageContext() {
+                return image
+            }
+        }
+        return UIImage.fluent(.extension24Filled)
     }
 }

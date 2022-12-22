@@ -10,6 +10,7 @@
 #import "SDTestCase.h"
 #import "SDInternalMacros.h"
 #import <KVOController/KVOController.h>
+#import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 
 static const NSUInteger kTestGIFFrameCount = 5; // local TestImage.gif loop count
 
@@ -347,7 +348,7 @@ static BOOL _isCalled;
         expect(cacheType).equal(SDImageCacheTypeNone);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithCommonTimeout];
+    [self waitForExpectationsWithTimeout:kAsyncTestTimeout * 2 handler:nil];
 }
 
 - (void)test24AnimatedImageViewCategoryDiskCache {
@@ -713,7 +714,7 @@ static BOOL _isCalled;
     [self waitForExpectationsWithTimeout:15 handler:nil];
 }
 
-- (void)test35AnimatedImagePlaybackModeReversedBounce{
+- (void)test35AnimatedImagePlaybackModeReversedBounce {
     XCTestExpectation *expectation = [self expectationWithDescription:@"test SDAnimatedImageView playback reverse bounce mode"];
     
     SDAnimatedImageView *imageView = [SDAnimatedImageView new];
@@ -765,6 +766,31 @@ static BOOL _isCalled;
     [self waitForExpectationsWithTimeout:15 handler:nil];
 }
 
+- (void)test36AnimatedImageMemoryCost {
+    if (@available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)) {
+#if SD_TV
+        /// TV OS does not support ImageIO's webp.
+        [[SDImageCodersManager sharedManager] addCoder:[SDImageWebPCoder sharedCoder]];
+#else
+        [[SDImageCodersManager sharedManager] addCoder:[SDImageAWebPCoder sharedCoder]];
+#endif
+        UIImage *image = [UIImage sd_imageWithData:[NSData dataWithContentsOfFile:[self testMemotyCostImagePath]]];
+        NSUInteger cost = [image sd_memoryCost];
+#if SD_UIKIT
+        expect(image.images.count).equal(5333);
+#endif
+        expect(image.sd_imageFrameCount).equal(16);
+        expect(image.scale).equal(1);
+#if SD_MAC
+        /// Frame count is 1 in mac.
+        expect(cost).equal(image.size.width * image.size.height * 4);
+#else
+        expect(cost).equal(16 * image.size.width * image.size.height * 4);
+#endif
+        [[SDImageCodersManager sharedManager] removeCoder:[SDImageAWebPCoder sharedCoder]];
+    }
+}
+
 #pragma mark - Helper
 - (UIWindow *)window {
     if (!_window) {
@@ -792,6 +818,12 @@ static BOOL _isCalled;
 - (NSString *)testAPNGPPath {
     NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
     NSString *testPath = [testBundle pathForResource:@"TestImageAnimated" ofType:@"apng"];
+    return testPath;
+}
+
+- (NSString *)testMemotyCostImagePath {
+    NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
+    NSString *testPath = [testBundle pathForResource:@"TestAnimatedImageMemory" ofType:@"webp"];
     return testPath;
 }
 

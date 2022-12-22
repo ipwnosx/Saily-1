@@ -1,34 +1,15 @@
 name: Build Release
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: macos-11
-    env:
-      THEOS: theos
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Install Dependencies
-        run: brew install ldid xz
-      - name: Setup Theos
-        uses: actions/checkout@master
-        with:
-          repository: theos/theos
-          ref: 8771215f765e774bfefdacc6ddf0e151c2973d49
-          path: theos
-          submodules: recursive
-      - name: Download SDKs
-        run: |
-          curl -LO https://github.com/SamHep0803/iOS-13-Patched-SDK/archive/master.zip 
-          TMP=$(mktemp -d)
-          unzip master.zip -d $TMP
-          mv $TMP/iOS-13-Patched-SDK-master/*.sdk theos/sdks
-          rm -r master.zip $TMP # TODO: it should be 
-          brew install dpkg
+        run: brew install ldid xz dpkg
       - uses: actions/checkout@v2
-      - name: submodules-init
-        uses: snickerbockers/submodules-init@v4
       - name: Build
         run: |
           chmod +x ./Resources/compile.release.action.sh
@@ -43,3 +24,13 @@ jobs:
         with:
           name: "chromatic.rel.ci.${{ env.build_timestamp }}.deb"
           path: "build/artifact/chromatic.rel.ci.${{ env.build_timestamp }}.deb"
+      - name: Upload .dSYM
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: "chromatic.rel.ci.${{ env.build_timestamp }}+dSYM.zip"
+          path: "build/artifact/${{ env.build_timestamp }}+dSYM.zip"
+      - name: Upload Bugsnag
+        run: |
+          brew install bugsnag/tap/bugsnag-dsym-upload
+          bugsnag-dsym-upload --api-key "${{ secrets.BUGSNAG_API_TOKEN }}" "build/artifact/${{ env.build_timestamp }}+dSYM.zip"
+

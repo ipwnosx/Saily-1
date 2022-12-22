@@ -11,13 +11,6 @@
 #import "BSGInternalErrorReporter.h"
 #import "BugsnagLogger.h"
 
-static void ReportInternalError(NSString *errorClass, NSError *error) {
-    NSString *file = @(__FILE__).lastPathComponent;
-    NSString *message = BSGErrorDescription(error);
-    NSString *groupingHash = [NSString stringWithFormat:@"%@: %@: %@ %ld", file, errorClass, error.domain, (long)error.code];
-    [BSGInternalErrorReporter.sharedInstance reportErrorWithClass:errorClass message:message diagnostics:error.userInfo groupingHash:groupingHash];
-}
-
 static BOOL ensureDirExists(NSString *path) {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
@@ -25,7 +18,12 @@ static BOOL ensureDirExists(NSString *path) {
         bsg_log_err(@"Could not create directory %@: %@", path, error);
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            ReportInternalError(@"Could not create directory", error);
+            [BSGInternalErrorReporter performBlock:^(BSGInternalErrorReporter *reporter) {
+                [reporter reportErrorWithClass:@"Could not create directory"
+                                       context:path.lastPathComponent
+                                       message:BSGErrorDescription(error)
+                                   diagnostics:error.userInfo];
+            }];
         });
         return NO;
     }
@@ -34,7 +32,6 @@ static BOOL ensureDirExists(NSString *path) {
 
 static NSString *rootDirectory(NSString *fsVersion) {
     // Default to an unusable location that will always fail.
-    static NSString* defaultRootPath = @"/";
     static NSString* rootPath = @"/";
 
     static dispatch_once_t onceToken;
@@ -47,7 +44,7 @@ static NSString *rootDirectory(NSString *fsVersion) {
         NSSearchPathDirectory directory = NSApplicationSupportDirectory;
 #endif
         NSError *error = nil;
-        NSURL *url = [NSFileManager.defaultManager URLForDirectory:directory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+        NSURL *url = [NSFileManager.defaultManager URLForDirectory:directory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:&error];
         if (!url) {
             bsg_log_err(@"Could not locate directory for storage: %@", error);
             return;
@@ -59,10 +56,7 @@ static NSString *rootDirectory(NSString *fsVersion) {
                     NSBundle.mainBundle.bundleIdentifier ?: NSProcessInfo.processInfo.processName,
                     fsVersion];
 
-        // If we can't even create the root dir, all is lost, and no file ops can be allowed.
-        if(!ensureDirExists(rootPath)) {
-            rootPath = defaultRootPath;
-        }
+        ensureDirExists(rootPath);
     });
 
     return rootPath;
@@ -70,13 +64,11 @@ static NSString *rootDirectory(NSString *fsVersion) {
 
 static NSString *getAndCreateSubdir(NSString *rootPath, NSString *relativePath) {
     NSString *subdirPath = [rootPath stringByAppendingPathComponent:relativePath];
-    if (ensureDirExists(subdirPath)) {
-        return subdirPath;
-    }
-    // Make the best of it, just return the root dir.
-    return rootPath;
+    ensureDirExists(subdirPath);
+    return subdirPath;
 }
 
+BSG_OBJC_DIRECT_MEMBERS
 @implementation BSGFileLocations
 
 + (instancetype) current {
@@ -99,11 +91,11 @@ static NSString *getAndCreateSubdir(NSString *rootPath, NSString *relativePath) 
         _sessions = getAndCreateSubdir(root, @"sessions");
         _breadcrumbs = getAndCreateSubdir(root, @"breadcrumbs");
         _kscrashReports = getAndCreateSubdir(root, @"KSCrashReports");
-        _kvStore = getAndCreateSubdir(root, @"kvstore");
         _appHangEvent = [root stringByAppendingPathComponent:@"app_hang.json"];
         _flagHandledCrash = [root stringByAppendingPathComponent:@"bugsnag_handled_crash.txt"];
         _configuration = [root stringByAppendingPathComponent:@"config.json"];
         _metadata = [root stringByAppendingPathComponent:@"metadata.json"];
+        _runContext = [root stringByAppendingPathComponent:@"run_context"];
         _state = [root stringByAppendingPathComponent:@"state.json"];
         _systemState = [root stringByAppendingPathComponent:@"system_state.json"];
     }

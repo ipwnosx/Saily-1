@@ -130,6 +130,7 @@ extension SettingView {
                                                }) { changeToOpen, _ in
             if changeToOpen ?? false {
                 RepositoryCenter.default.historyRecordsEnabled = true
+                self.dispatchValueUpdate()
             } else {
                 let alert = UIAlertController(title: "⚠️",
                                               message: NSLocalizedString("DISABLE_HISTORY_RECORD_WILL_DELETE_PREVIOUS_HISTORY_REOCRDS",
@@ -139,6 +140,7 @@ extension SettingView {
                                               style: .destructive,
                                               handler: { _ in
                                                   RepositoryCenter.default.historyRecordsEnabled = false
+                                                  self.dispatchValueUpdate()
                                               }))
                 alert.addAction(UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"),
                                               style: .cancel,
@@ -156,38 +158,23 @@ extension SettingView {
         addSubview(repoRefreshTimeGap)
         addSubview(repoHistoryReocrd)
         repoLogin.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+            makeElement(constraint: x, widthAnchor: safeAnchor, topAnchor: anchor)
         }
         anchor = repoLogin
         repoDownloadLimit.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+            makeElement(constraint: x, widthAnchor: safeAnchor, topAnchor: anchor)
         }
         anchor = repoDownloadLimit
         repoDownloadTimeout.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+            makeElement(constraint: x, widthAnchor: safeAnchor, topAnchor: anchor)
         }
         anchor = repoDownloadTimeout
         repoRefreshTimeGap.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+            makeElement(constraint: x, widthAnchor: safeAnchor, topAnchor: anchor)
         }
         anchor = repoRefreshTimeGap
         repoHistoryReocrd.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+            makeElement(constraint: x, widthAnchor: safeAnchor, topAnchor: anchor)
         }
         anchor = repoHistoryReocrd
         groupEffect1.snp.makeConstraints { x in

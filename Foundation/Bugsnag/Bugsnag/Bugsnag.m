@@ -26,21 +26,16 @@
 
 #import "Bugsnag.h"
 
-#import "BSG_KSCrash.h"
+#import "BSGStorageMigratorV0V1.h"
 #import "Bugsnag+Private.h"
 #import "BugsnagBreadcrumbs.h"
-#import "BugsnagLogger.h"
 #import "BugsnagClient+Private.h"
-#import "BugsnagConfiguration+Private.h"
-#import "BugsnagKeys.h"
-#import "BugsnagMetadata+Private.h"
-#import "BugsnagPlugin.h"
-#import "BugsnagHandledState.h"
-#import "BugsnagSystemState.h"
-#import "BSGStorageMigratorV0V1.h"
+#import "BugsnagInternals.h"
+#import "BugsnagLogger.h"
 
 static BugsnagClient *bsg_g_bugsnag_client = NULL;
 
+BSG_OBJC_DIRECT_MEMBERS
 @implementation Bugsnag
 
 + (BugsnagClient *_Nonnull)start {
@@ -49,14 +44,15 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
 }
 
 + (BugsnagClient *_Nonnull)startWithApiKey:(NSString *_Nonnull)apiKey {
-    BugsnagConfiguration *configuration = [[BugsnagConfiguration alloc] initWithApiKey:apiKey];
+    BugsnagConfiguration *configuration = [BugsnagConfiguration loadConfig];
+    configuration.apiKey = apiKey;
     return [self startWithConfiguration:configuration];
 }
 
 + (BugsnagClient *_Nonnull)startWithConfiguration:(BugsnagConfiguration *_Nonnull)configuration {
     @synchronized(self) {
-        [BSGStorageMigratorV0V1 migrate];
         if (bsg_g_bugsnag_client == nil) {
+            [BSGStorageMigratorV0V1 migrate];
             bsg_g_bugsnag_client = [[BugsnagClient alloc] initWithConfiguration:configuration];
             [bsg_g_bugsnag_client start];
         } else {
@@ -72,17 +68,6 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
  */
 + (void)purge {
     bsg_g_bugsnag_client = nil;
-}
-
-+ (BugsnagConfiguration *)configuration {
-    if ([self bugsnagStarted]) {
-        return self.client.configuration;
-    }
-    return nil;
-}
-
-+ (BugsnagConfiguration *)instance {
-    return [self configuration];
 }
 
 + (BugsnagClient *)client {
@@ -133,18 +118,6 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
     }
 }
 
-/**
- * Intended for use by other clients (React Native/Unity). Calling this method
- * directly from iOS is not supported.
- */
-+ (void)notifyInternal:(BugsnagEvent *_Nonnull)event
-                 block:(BugsnagOnErrorBlock)block {
-    if ([self bugsnagStarted]) {
-        [self.client notifyInternal:event
-                              block:block];
-    }
-}
-
 + (BOOL)bugsnagStarted {
     if (!self.client.started) {
         bsg_log_err(@"Ensure you have started Bugsnag with startWithApiKey: "
@@ -158,13 +131,6 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
 + (void)leaveBreadcrumbWithMessage:(NSString *)message {
     if ([self bugsnagStarted]) {
         [self.client leaveBreadcrumbWithMessage:message];
-    }
-}
-
-+ (void)leaveBreadcrumbWithBlock:
-    (void (^_Nonnull)(BugsnagBreadcrumb *_Nonnull))block {
-    if ([self bugsnagStarted]) {
-        [self.client addBreadcrumbWithBlock:block];
     }
 }
 
@@ -186,9 +152,16 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
     }
 }
 
++ (void)leaveNetworkRequestBreadcrumbForTask:(NSURLSessionTask *)task
+                                     metrics:(NSURLSessionTaskMetrics *)metrics {
+    if ([self bugsnagStarted]) {
+        [self.client leaveNetworkRequestBreadcrumbForTask:task metrics:metrics];
+    }
+}
+
 + (NSArray<BugsnagBreadcrumb *> *_Nonnull)breadcrumbs {
     if ([self bugsnagStarted]) {
-        return self.client.breadcrumbs.breadcrumbs ?: @[];
+        return self.client.breadcrumbs;
     } else {
         return @[];
     }
@@ -214,10 +187,37 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
     }
 }
 
-+ (void)addRuntimeVersionInfo:(NSString *)info
-                      withKey:(NSString *)key {
+// =============================================================================
+// MARK: - <BugsnagFeatureFlagStore>
+// =============================================================================
+
++ (void)addFeatureFlagWithName:(NSString *)name variant:(nullable NSString *)variant {
     if ([self bugsnagStarted]) {
-        [self.client addRuntimeVersionInfo:info withKey:key];
+        [self.client addFeatureFlagWithName:name variant:variant];
+    }
+}
+
++ (void)addFeatureFlagWithName:(NSString *)name {
+    if ([self bugsnagStarted]) {
+        [self.client addFeatureFlagWithName:name];
+    }
+}
+
++ (void)addFeatureFlags:(NSArray<BugsnagFeatureFlag *> *)featureFlags {
+    if ([self bugsnagStarted]) {
+        [self.client addFeatureFlags:featureFlags];
+    }
+}
+
++ (void)clearFeatureFlagWithName:(NSString *)name {
+    if ([self bugsnagStarted]) {
+        [self.client clearFeatureFlagWithName:name];
+    }
+}
+
++ (void)clearFeatureFlags {
+    if ([self bugsnagStarted]) {
+        [self.client clearFeatureFlags];
     }
 }
 
@@ -313,10 +313,18 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
     }
 }
 
-+ (void)addOnSessionBlock:(BugsnagOnSessionBlock _Nonnull)block
-{
++ (nonnull BugsnagOnSessionRef)addOnSessionBlock:(nonnull BugsnagOnSessionBlock)block {
     if ([self bugsnagStarted]) {
-        [self.client addOnSessionBlock:block];
+        return [self.client addOnSessionBlock:block];
+    } else {
+        // We need to return something from this nonnull method; simulate what would have happened.
+        return [block copy];
+    }
+}
+
++ (void)removeOnSession:(nonnull BugsnagOnSessionRef)callback {
+    if ([self bugsnagStarted]) {
+        [self.client removeOnSession:callback];
     }
 }
 
@@ -327,22 +335,22 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
     }
 }
 
-/**
- * Intended for internal use only - sets the code bundle id for React Native
- */
-+ (void)updateCodeBundleId:(NSString *)codeBundleId {
-    if ([self bugsnagStarted]) {
-        self.client.codeBundleId = codeBundleId;
-    }
-}
-
 // =============================================================================
 // MARK: - OnBreadcrumb
 // =============================================================================
 
-+ (void)addOnBreadcrumbBlock:(BugsnagOnBreadcrumbBlock _Nonnull)block {
++ (nonnull BugsnagOnBreadcrumbRef)addOnBreadcrumbBlock:(nonnull BugsnagOnBreadcrumbBlock)block {
     if ([self bugsnagStarted]) {
-        [self.client addOnBreadcrumbBlock:block];
+        return [self.client addOnBreadcrumbBlock:block];
+    } else {
+        // We need to return something from this nonnull method; simulate what would have happened.
+        return [block copy];
+    }
+}
+
++ (void)removeOnBreadcrumb:(nonnull BugsnagOnBreadcrumbRef)callback {
+    if ([self bugsnagStarted]) {
+        [self.client removeOnBreadcrumb:callback];
     }
 }
 

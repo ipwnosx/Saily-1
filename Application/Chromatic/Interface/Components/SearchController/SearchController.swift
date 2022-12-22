@@ -195,6 +195,33 @@ class SearchController: UITableViewController {
         }
     }
 
+    override func tableView(_: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point _: CGPoint) -> UIContextMenuConfiguration? {
+        if searchResults.count < 1 { return nil }
+        let object = searchResults[indexPath.section][indexPath.row]
+        switch object.associatedValue {
+        case let .installed(package), let .collection(package):
+            return InterfaceBridge.packageContextMenuConfiguration(for: package, reference: view)
+        case let .package(identity, repository):
+            if let lookup = RepositoryCenter
+                .default
+                .obtainImmutableRepository(withUrl: repository)?
+                .metaPackage[identity]
+            {
+                return InterfaceBridge.packageContextMenuConfiguration(for: lookup, reference: view)
+            }
+        case .repository, .author:
+            return nil
+        }
+        return nil
+    }
+
+    override func tableView(_: UITableView, willPerformPreviewActionForMenuWith _: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let destinationViewController = animator.previewViewController else { return }
+        animator.addAnimations {
+            self.show(destinationViewController, sender: self)
+        }
+    }
+
     func updateGuiderOpacity() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) { [self] in
@@ -242,4 +269,37 @@ extension SearchController: UISearchControllerDelegate, UISearchResultsUpdating,
     }
 
     func searchBar(_: UISearchBar, textDidChange _: String) {}
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard var text = searchBar
+            .text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        else {
+            return
+        }
+        while text.hasSuffix("/") {
+            text.removeLast()
+        }
+        if text.hasPrefix("http"), let url = URL(string: text) {
+            // check if already exists
+            if RepositoryCenter.default.obtainImmutableRepository(withUrl: url) != nil {
+                return
+            }
+            // if not, push to add
+            guard let scheme = URL(string: "apt-repo://\(url.absoluteString)") else {
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+                guard let self = self else { return }
+                // check if user tapped a cell, and view controller is away
+                if self.view.window?.topMostViewController != self.searchController {
+                    // do not present
+                    return
+                }
+                debugPrint(scheme)
+                // now, add this repo
+                UIApplication.shared.open(scheme, options: [:], completionHandler: nil)
+            }
+        }
+    }
 }
